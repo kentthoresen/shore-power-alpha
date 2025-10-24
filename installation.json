@@ -1,0 +1,300 @@
+{
+  "devices": [
+    {
+      "id": "dev-grid-1",
+      "name": "Grid Interface PLC",
+      "type": "Siemens S7-1200",
+      "ipAddress": "10.10.0.5",
+      "status": "Online",
+      "role": "Primary",
+      "deploymentStatus": "Deployed",
+      "cpuUsage": 25,
+      "memoryUsage": 40,
+      "temperature": 35,
+      "iconId": "grid",
+      "interfaces": [
+        {
+          "id": "if-grid-pwr",
+          "type": "Power",
+          "port": "Main",
+          "settings": {}
+        },
+        {
+          "id": "if-grid-eth",
+          "type": "Ethernet",
+          "port": "eth0",
+          "settings": {}
+        }
+      ],
+      "dataPoints": [
+        {
+          "id": "dp-grid-freq",
+          "name": "Grid Frequency",
+          "address": "DB1.DBD4",
+          "value": 50.01,
+          "unit": "Hz",
+          "access": "RO"
+        }
+      ],
+      "rules": [],
+      "security": {
+        "certificateStatus": "Issued"
+      },
+      "position": {
+        "x": 350,
+        "y": 80
+      }
+    },
+    {
+      "id": "dev-inv-a",
+      "name": "Main Inverter A",
+      "type": "SMA Sunny Tripower",
+      "ipAddress": "10.10.0.10",
+      "status": "Online",
+      "role": "Primary",
+      "groupId": "inverter-group",
+      "deploymentStatus": "Deployed",
+      "cpuUsage": 18,
+      "memoryUsage": 33,
+      "temperature": 55,
+      "iconId": "inverter",
+      "interfaces": [
+        {
+          "id": "if-inva-dc",
+          "type": "Power",
+          "port": "DC",
+          "settings": {}
+        },
+        {
+          "id": "if-inva-ac",
+          "type": "Power",
+          "port": "AC",
+          "settings": {}
+        },
+        {
+          "id": "if-inva-eth",
+          "type": "Ethernet",
+          "port": "eth0",
+          "settings": {}
+        }
+      ],
+      "dataPoints": [
+        {
+          "id": "dp-inva-kw",
+          "name": "Output Power",
+          "address": "30775",
+          "value": 25.5,
+          "unit": "kW",
+          "access": "RO"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule-inv-1",
+          "name": "High Temp Derating",
+          "level": "Alarm",
+          "enabled": true,
+          "condition": {
+            "dataPointId": "dp-inva-kw",
+            "operator": "gt",
+            "value": 80
+          },
+          "actions": [
+            {
+              "id": "act-1",
+              "targetDeviceId": "dev-inv-a",
+              "command": "THROTTLE_INVERTER"
+            }
+          ]
+        }
+      ],
+      "security": {
+        "certificateStatus": "Issued"
+      },
+      "position": {
+        "x": 110,
+        "y": 280
+      }
+    },
+    {
+      "id": "dev-inv-b",
+      "name": "Main Inverter B (Stby)",
+      "type": "SMA Sunny Tripower",
+      "ipAddress": "10.10.0.11",
+      "status": "Online",
+      "role": "Standby",
+      "groupId": "inverter-group",
+      "deploymentStatus": "Deployed",
+      "cpuUsage": 4,
+      "memoryUsage": 32,
+      "temperature": 52,
+      "iconId": "inverter",
+      "interfaces": [
+        {
+          "id": "if-invb-dc",
+          "type": "Power",
+          "port": "DC",
+          "settings": {}
+        },
+        {
+          "id": "if-invb-ac",
+          "type": "Power",
+          "port": "AC",
+          "settings": {}
+        },
+        {
+          "id": "if-invb-eth",
+          "type": "Ethernet",
+          "port": "eth0",
+          "settings": {},
+          "side": "left"
+        }
+      ],
+      "dataPoints": [
+        {
+          "id": "dp-invb-kw",
+          "name": "Output Power",
+          "address": "30775",
+          "value": 0,
+          "unit": "kW",
+          "access": "RO"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule-inv-2",
+          "name": "High Temp Derating",
+          "level": "Alarm",
+          "enabled": true,
+          "condition": {
+            "dataPointId": "dp-invb-kw",
+            "operator": "gt",
+            "value": 80
+          },
+          "actions": [
+            {
+              "id": "act-1",
+              "targetDeviceId": "dev-inv-b",
+              "command": "THROTTLE_INVERTER"
+            }
+          ]
+        }
+      ],
+      "security": {
+        "certificateStatus": "Issued"
+      },
+      "position": {
+        "x": 810,
+        "y": 560
+      }
+    },
+    {
+      "id": "dev-bess-1",
+      "name": "Containerized BESS",
+      "type": "Tesla Megapack",
+      "ipAddress": "10.10.0.20",
+      "status": "Online",
+      "role": "Primary",
+      "deploymentStatus": "Deployed",
+      "cpuUsage": 10,
+      "memoryUsage": 50,
+      "temperature": 29,
+      "iconId": "battery",
+      "interfaces": [
+        {
+          "id": "if-bess-pwr",
+          "type": "Power",
+          "port": "DC Bus",
+          "settings": {}
+        },
+        {
+          "id": "if-bess-eth",
+          "type": "Ethernet",
+          "port": "eth0",
+          "settings": {},
+          "side": "right"
+        }
+      ],
+      "dataPoints": [
+        {
+          "id": "dp-bess-soc",
+          "name": "State of Charge",
+          "address": "1001",
+          "value": 75,
+          "unit": "%",
+          "access": "RO"
+        },
+        {
+          "id": "dp-bess-kwh",
+          "name": "Capacity",
+          "address": "1000",
+          "value": 2500,
+          "unit": "kWh",
+          "access": "RO"
+        }
+      ],
+      "rules": [],
+      "security": {
+        "certificateStatus": "Issued"
+      },
+      "position": {
+        "x": 260,
+        "y": 570
+      }
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn-1",
+      "type": "power",
+      "fromDeviceId": "dev-grid-1",
+      "fromInterfaceId": "if-grid-pwr",
+      "toDeviceId": "dev-inv-a",
+      "toInterfaceId": "if-inva-ac",
+      "cableSpec": "95mm² CU",
+      "length": 10
+    },
+    {
+      "id": "conn-2",
+      "type": "power",
+      "fromDeviceId": "dev-inv-a",
+      "fromInterfaceId": "if-inva-dc",
+      "toDeviceId": "dev-bess-1",
+      "toInterfaceId": "if-bess-pwr",
+      "cableSpec": "120mm² CU",
+      "length": 5
+    },
+    {
+      "fromDeviceId": "dev-inv-b",
+      "fromInterfaceId": "if-invb-eth",
+      "toDeviceId": "dev-bess-1",
+      "toInterfaceId": "if-bess-eth",
+      "id": "conn-1761321629319",
+      "type": "communication",
+      "cableType": "CAT5e UTP",
+      "notes": "comm"
+    }
+  ],
+  "serviceConnectors": [
+    {
+      "id": "sc-1",
+      "name": "Grid Tariff API",
+      "type": "GridTariff",
+      "config": {
+        "location": "DE",
+        "apiKey": "..."
+      }
+    }
+  ],
+  "deviceGroups": [],
+  "deviceTemplates": [],
+  "predefinedCommands": [
+    "SHUTDOWN_BATTERY",
+    "START_GENERATOR",
+    "THROTTLE_INVERTER",
+    "CHARGE_FROM_INVERTER",
+    "DISCONNECT_GRID"
+  ],
+  "testScenarios": [],
+  "risks": []
+}
