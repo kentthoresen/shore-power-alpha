@@ -63,13 +63,15 @@
           "id": "if-inva-dc",
           "type": "Power",
           "port": "DC",
-          "settings": {}
+          "settings": {},
+          "side": "bottom"
         },
         {
           "id": "if-inva-ac",
           "type": "Power",
           "port": "AC",
-          "settings": {}
+          "settings": {},
+          "side": "top"
         },
         {
           "id": "if-inva-eth",
